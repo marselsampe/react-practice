@@ -3,19 +3,21 @@ import ReactDOM from 'react-dom';
 import FunctionalLocalState from './FunctionalLocalState';
 import BindingLabelToInput from './BindingLabelToInput';
 
-function getContainer(activeMenu) {
-    if (activeMenu === 'functionalLocalState')
-        return (<FunctionalLocalState />);
-    else if (activeMenu === 'bindingLabelToInput')
-        return (<BindingLabelToInput />);
-    else
-        return (<div>...</div>);
+const PAGES = {
+    functionalLocalState: FunctionalLocalState,
+    bindingLabelToInput: BindingLabelToInput
+}
+
+const Page = (props) => {
+    const Handler = PAGES[props.activePage];
+
+    return <Handler />;
 }
 
 class App extends React.Component {
     constructor() {
         super();
-        this.state = { activeMenu: null };
+        this.state = { activeMenu: 'functionalLocalState' };
     }
 
     onMenuClick = (activeMenu) => {
@@ -23,8 +25,6 @@ class App extends React.Component {
     }
 
     render() {
-        const container = getContainer(this.state.activeMenu);
-
         return (
             <div>
                 <div>
@@ -38,7 +38,7 @@ class App extends React.Component {
                     </ul>
                 </div>
                 <hr />
-                {container}
+                <Page activePage={this.state.activeMenu} />
             </div>
         );
     }

@@ -17,11 +17,15 @@ class MyInput extends React.Component {
         this.id = getNextId();
     }
 
+    onChange(e){
+        this.props.onChange(e.target.value);
+    }
+
     render() {
         return (
             <label htmlFor={this.id}>
                 {this.props.label} :
-                <input id={this.id} value={this.props.value}/>
+                <input id={this.id} value={this.props.value} onChange={this.onChange}/>
             </label>
         );
     }
