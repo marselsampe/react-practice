@@ -1,45 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 import FunctionalLocalState from './FunctionalLocalState';
 import BindingLabelToInput from './BindingLabelToInput';
-
-const PAGES = {
-    functionalLocalState: FunctionalLocalState,
-    bindingLabelToInput: BindingLabelToInput
-}
-
-const Page = (props) => {
-    const Handler = PAGES[props.activePage];
-
-    return <Handler />;
-}
 
 class App extends React.Component {
     constructor() {
         super();
-        this.state = { activeMenu: 'functionalLocalState' };
-    }
-
-    onMenuClick = (activeMenu) => {
-        this.setState({ activeMenu: activeMenu });
     }
 
     render() {
         return (
-            <div>
+            <Router>
                 <div>
                     <ul>
                         <li>
-                            <a href="#" onClick={() => this.onMenuClick('functionalLocalState')}>Functional Local State</a>
+                            <Link to="/functionlocalstate/">Function Local State</Link>
                         </li>
                         <li>
-                            <a href="#" onClick={() => this.onMenuClick('bindingLabelToInput')}>#Pattern - Binding Label to Input</a>
+                            <Link to="/bindinglabeltoinput/">Binding Label To Input</Link>
                         </li>
                     </ul>
+                    <hr/>
+
+                    <Route path="/functionlocalstate/" component={FunctionalLocalState} />
+                    <Route path="/bindinglabeltoinput/" component={BindingLabelToInput} />
                 </div>
-                <hr />
-                <Page activePage={this.state.activeMenu} />
-            </div>
+            </Router>
         );
     }
 }
